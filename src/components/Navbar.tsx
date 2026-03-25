@@ -2,6 +2,8 @@ type NavbarProps = {
 	onNavClick?: (id: string) => void
 }
 
+import logo from '../assets/images/Logo.png'
+
 export default function Navbar({ onNavClick }: NavbarProps) {
 	const handleClick = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
 		if (!onNavClick) return
@@ -18,9 +20,13 @@ export default function Navbar({ onNavClick }: NavbarProps) {
 					className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
 					aria-label="Go to top"
 				>
-					<span className="grid size-6 place-items-center rounded border border-white/15 text-orange-400">
-						<span aria-hidden>☕</span>
-					</span>
+					<img
+						src={logo}
+						alt="Iron & Oak"
+						className="size-7 rounded border border-white/15 bg-white/5 object-contain"
+						loading="eager"
+						decoding="async"
+					/>
 					<span className="uppercase">Iron &amp; Oak</span>
 				</a>
 
