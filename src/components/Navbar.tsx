@@ -23,7 +23,7 @@ export default function Navbar({ onNavClick }: NavbarProps) {
 					<img
 						src={logo}
 						alt="Iron & Oak"
-						className="size-7 rounded border border-white/15 bg-white/5 object-contain"
+						className="h-10 w-auto object-contain md:h-12"
 						loading="eager"
 						decoding="async"
 					/>
