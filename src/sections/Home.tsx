@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import heroVideo from '../assets/videos/Kávé összefoglaló - marketing videó.mp4'
 
@@ -13,14 +13,31 @@ export default function Home({ onPrimaryAction, onSecondaryAction }: HomeProps) 
 	const videoRef = useRef<HTMLVideoElement | null>(null)
 	const maxSeconds = useMemo(() => MAX_HERO_SECONDS, [])
 
-	const handleTimeUpdate = () => {
+	useEffect(() => {
 		const video = videoRef.current
 		if (!video) return
-		if (Number.isFinite(video.currentTime) && video.currentTime >= maxSeconds) {
+
+		const restart = () => {
 			video.currentTime = 0
 			void video.play()
 		}
-	}
+
+		const onTimeUpdate = () => {
+			if (Number.isFinite(video.currentTime) && video.currentTime >= maxSeconds) {
+				restart()
+			}
+		}
+
+		const onEnded = () => restart()
+
+		video.addEventListener('timeupdate', onTimeUpdate)
+		video.addEventListener('ended', onEnded)
+
+		return () => {
+			video.removeEventListener('timeupdate', onTimeUpdate)
+			video.removeEventListener('ended', onEnded)
+		}
+	}, [maxSeconds])
 
 	return (
 		<section id="home" className="relative min-h-screen overflow-hidden bg-black">
@@ -31,8 +48,8 @@ export default function Home({ onPrimaryAction, onSecondaryAction }: HomeProps) 
 				autoPlay
 				muted
 				playsInline
+				disablePictureInPicture
 				preload="auto"
-				onTimeUpdate={handleTimeUpdate}
 				aria-hidden
 			/>
 
