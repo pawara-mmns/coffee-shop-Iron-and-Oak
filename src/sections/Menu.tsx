@@ -1,6 +1,8 @@
 import Image01 from '../assets/images/SmokedMapleLatte.avif'
 import Image02 from '../assets/images/ReservePourOver.avif'
 import Image03 from '../assets/images/BurntHoneyCroissant.avif'
+import Image04 from '../assets/images/SeasonalColdBrew.avif'
+import Image05 from '../assets/images/CocoaEspresso.avif'
 
 import { useEffect, useMemo, useState } from 'react'
 
@@ -34,7 +36,7 @@ const items = [
 		price: '$4.75',
 		description:
 			'Slow-steeped for a smooth finish, served over crystal ice with rotating seasonal infusions.',
-		imageSrc: Image02,
+		imageSrc: Image04,
 		imageAlt: 'Iced coffee beverage',
 	},
 	{
@@ -42,7 +44,7 @@ const items = [
 		price: '$5.75',
 		description:
 			'Bold espresso layered with deep cocoa notes and a silky finish—built for late-night conversations.',
-		imageSrc: Image01,
+		imageSrc: Image05,
 		imageAlt: 'Espresso based drink',
 	},
 ]
