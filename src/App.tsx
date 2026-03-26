@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar'
 import Home from './sections/Home'
 import Vibe from './sections/Vibe'
+import Menu from './sections/Menu'
 
 export default function App() {
 	return (
@@ -8,6 +9,7 @@ export default function App() {
 			<Navbar />
 			<Home />
 			<Vibe />
+			<Menu />
 		</div>
 	)
 }
