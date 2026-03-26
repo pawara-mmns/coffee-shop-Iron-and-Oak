@@ -2,6 +2,8 @@ import Image01 from '../assets/images/SmokedMapleLatte.avif'
 import Image02 from '../assets/images/ReservePourOver.avif'
 import Image03 from '../assets/images/BurntHoneyCroissant.avif'
 
+import { useEffect, useMemo, useState } from 'react'
+
 const items = [
 	{
 		title: 'Smoked Maple Latte',
@@ -27,9 +29,48 @@ const items = [
 		imageSrc: Image03,
 		imageAlt: 'Pastry and coffee',
 	},
+	{
+		title: 'Seasonal Cold Brew',
+		price: '$4.75',
+		description:
+			'Slow-steeped for a smooth finish, served over crystal ice with rotating seasonal infusions.',
+		imageSrc: Image02,
+		imageAlt: 'Iced coffee beverage',
+	},
+	{
+		title: 'Cocoa Espresso',
+		price: '$5.75',
+		description:
+			'Bold espresso layered with deep cocoa notes and a silky finish—built for late-night conversations.',
+		imageSrc: Image01,
+		imageAlt: 'Espresso based drink',
+	},
 ]
 
 export default function Menu() {
+	const [activeIndex, setActiveIndex] = useState(0)
+	const count = items.length
+
+	const getSignedOffset = useMemo(() => {
+		return (index: number) => {
+			let diff = (index - activeIndex + count) % count
+			if (diff > count / 2) diff -= count
+			return diff
+		}
+	}, [activeIndex, count])
+
+	useEffect(() => {
+		if (typeof window === 'undefined') return
+		const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+		if (reducedMotion) return
+
+		const id = window.setInterval(() => {
+			setActiveIndex((i) => (i + 1) % count)
+		}, 3200)
+
+		return () => window.clearInterval(id)
+	}, [count])
+
 	return (
 		<section id="menu" className="relative overflow-hidden bg-zinc-950">
 			<div className="pointer-events-none absolute inset-0 opacity-70">
@@ -47,31 +88,60 @@ export default function Menu() {
 					</p>
 				</header>
 
-				<div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-					{items.map((item) => (
-						<article
-							key={item.title}
-							className="rounded border border-orange-500/20 bg-white/5 p-5 shadow-[0_0_0_1px_rgba(0,0,0,0.2)]"
-						>
-							<div className="rounded bg-black/20 p-3">
-								<img
-									src={item.imageSrc}
-									alt={item.imageAlt}
-									className="aspect-square w-full rounded object-cover"
-									loading="lazy"
-									decoding="async"
-								/>
-							</div>
+				<div
+					className="relative mx-auto mt-20 h-[340px] w-full max-w-5xl sm:h-[400px] md:h-[460px]"
+					aria-roledescription="carousel"
+					aria-label="Signature pours"
+				>
+					{items.map((item, index) => {
+						const signed = getSignedOffset(index)
+						const abs = Math.abs(signed)
+						const isActive = signed === 0
 
-							<div className="mt-6 flex items-baseline justify-between gap-4">
-								<h3 className="text-lg font-semibold text-white/90">{item.title}</h3>
-								<p className="text-sm font-semibold text-orange-400">{item.price}</p>
-							</div>
+						const visible = abs <= 2
+						const offset = signed * 220
+						const scale = isActive ? 1 : abs === 1 ? 0.93 : 0.87
+						const opacity = !visible ? 0 : isActive ? 1 : abs === 1 ? 0.65 : 0.38
+						const zIndex = !visible ? 0 : isActive ? 30 : abs === 1 ? 20 : 10
+						const extraClass =
+							abs === 2 ? 'blur-[1px] brightness-75' : abs === 1 ? 'brightness-90' : ''
 
-							<p className="mt-3 text-sm leading-6 text-white/60">{item.description}</p>
-						</article>
-					))}
+						return (
+							<div
+								key={item.title}
+								className="absolute left-1/2 top-0 w-[250px] -translate-x-1/2 transition-[transform,opacity,filter] duration-700 ease-in-out will-change-transform sm:w-[290px] md:w-[330px]"
+								style={{
+									transform: `translate(-50%, 0) translateX(${offset}px) translateY(0.5rem) scale(${scale})`,
+									opacity,
+									zIndex,
+								}}
+								aria-hidden={!isActive}
+							>
+								<div
+									className={`relative overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.55)] ${extraClass}`}
+								>
+									<img
+										src={item.imageSrc}
+										alt={item.imageAlt}
+										className="aspect-square w-full object-cover"
+										loading="lazy"
+										decoding="async"
+									/>
+									<div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-4">
+										<div className="flex items-baseline justify-between gap-4">
+											<p className="text-sm font-semibold text-white/90">{item.title}</p>
+											<p className="text-sm font-semibold text-orange-400">{item.price}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						)
+					})}
 				</div>
+
+				<p className="mx-auto mt-10 max-w-3xl text-center text-sm leading-6 text-white/55 sm:text-base">
+					{items[activeIndex]?.description}
+				</p>
 
 				<div className="mt-12 flex justify-center">
 					<a
