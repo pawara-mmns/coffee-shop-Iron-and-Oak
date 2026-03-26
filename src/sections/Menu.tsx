@@ -89,7 +89,7 @@ export default function Menu() {
 				</header>
 
 				<div
-					className="relative mx-auto mt-20 h-[340px] w-full max-w-5xl sm:h-[400px] md:h-[460px]"
+					className="relative mx-auto mt-28 h-[360px] w-full max-w-6xl sm:h-[430px] md:h-[520px]"
 					aria-roledescription="carousel"
 					aria-label="Signature pours"
 				>
@@ -99,7 +99,7 @@ export default function Menu() {
 						const isActive = signed === 0
 
 						const visible = abs <= 2
-						const offset = signed * 220
+						const offset = signed * 280
 						const scale = isActive ? 1 : abs === 1 ? 0.93 : 0.87
 						const opacity = !visible ? 0 : isActive ? 1 : abs === 1 ? 0.65 : 0.38
 						const zIndex = !visible ? 0 : isActive ? 30 : abs === 1 ? 20 : 10
@@ -109,21 +109,25 @@ export default function Menu() {
 						return (
 							<div
 								key={item.title}
-								className="absolute left-1/2 top-0 w-[250px] -translate-x-1/2 transition-[transform,opacity,filter] duration-700 ease-in-out will-change-transform sm:w-[290px] md:w-[330px]"
+								className="absolute left-1/2 top-1/2 w-[280px] transition-[transform,opacity] duration-700 ease-in-out will-change-transform sm:w-[360px] md:w-[440px]"
 								style={{
-									transform: `translate(-50%, 0) translateX(${offset}px) translateY(0.5rem) scale(${scale})`,
+									transform: `translate(-50%, -50%) translateX(${offset}px)`,
 									opacity,
 									zIndex,
 								}}
 								aria-hidden={!isActive}
 							>
 								<div
-									className={`relative overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.55)] ${extraClass}`}
+									className="transition-transform duration-700 ease-in-out"
+									style={{ transform: `scale(${scale})` }}
 								>
+									<div
+										className={`relative overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.55)] ${extraClass}`}
+									>
 									<img
 										src={item.imageSrc}
 										alt={item.imageAlt}
-										className="aspect-square w-full object-cover"
+										className="aspect-square w-full object-cover object-center"
 										loading="lazy"
 										decoding="async"
 									/>
@@ -133,17 +137,18 @@ export default function Menu() {
 											<p className="text-sm font-semibold text-orange-400">{item.price}</p>
 										</div>
 									</div>
+									</div>
 								</div>
 							</div>
 						)
 					})}
 				</div>
 
-				<p className="mx-auto mt-10 max-w-3xl text-center text-sm leading-6 text-white/55 sm:text-base">
+				<p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-white/55 sm:text-base">
 					{items[activeIndex]?.description}
 				</p>
 
-				<div className="mt-12 flex justify-center">
+				<div className="mt-10 flex justify-center">
 					<a
 						href="#"
 						className="inline-flex items-center justify-center rounded border border-orange-500/40 bg-transparent px-8 py-3 text-sm font-semibold uppercase tracking-wider text-orange-300 hover:border-orange-400 hover:text-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
