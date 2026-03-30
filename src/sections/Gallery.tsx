@@ -1,7 +1,7 @@
-import imageA from '../assets/images/OurStoryImage.avif'
-import imageB from '../assets/images/ReservePourOver.avif'
-import imageC from '../assets/images/SmokedMapleLatte.avif'
-import imageD from '../assets/images/BurntHoneyCroissant.avif'
+import imageA from '../assets/images/Gallery02.avif'
+import imageB from '../assets/images/Gallery01.avif'
+import imageC from '../assets/images/Gallery03.avif'
+import imageD from '../assets/images/Gallery04.avif'
 
 export default function Gallery() {
 	return (
@@ -32,7 +32,7 @@ export default function Gallery() {
 							<img
 								src={imageB}
 								alt="Coffee tools and pour over"
-								className="aspect-[16/9] w-full object-cover"
+								className="aspect-[16/11] w-full object-cover"
 								loading="lazy"
 								decoding="async"
 							/>
