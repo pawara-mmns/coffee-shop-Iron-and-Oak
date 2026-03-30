@@ -3,6 +3,7 @@ import Home from './sections/Home'
 import Vibe from './sections/Vibe'
 import Menu from './sections/Menu'
 import Gallery from './sections/Gallery'
+import Visit from './sections/Visit'
 
 export default function App() {
 	return (
@@ -12,6 +13,7 @@ export default function App() {
 			<Vibe />
 			<Menu />
 			<Gallery />
+			<Visit />
 		</div>
 	)
 }
