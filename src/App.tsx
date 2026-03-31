@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import SectionBridge from './components/SectionBridge'
 import Home from './sections/Home'
 import Vibe from './sections/Vibe'
 import Menu from './sections/Menu'
@@ -15,6 +16,7 @@ export default function App() {
 			<Menu />
 			<Gallery />
 			<Visit />
+			<SectionBridge />
 			<Footer />
 		</div>
 	)
